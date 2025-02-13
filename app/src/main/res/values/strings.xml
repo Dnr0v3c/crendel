@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">VolunteerApp</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="dont_have_account">You don\'t have account. <font color="blue">Sign up</font></string>
+    <string name="you_have_account">You  have account. <font color="blue">Sign in</font></string>
+    <string name="sign_up">Sign up</string>
+    <string name="map_api_key">AIzaSyDT79qFBWp2iZ1qHlciK-IsqXG2EcYCCfA</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+
+</resources>
