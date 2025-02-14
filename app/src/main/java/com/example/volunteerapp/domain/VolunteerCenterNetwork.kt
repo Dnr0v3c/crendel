@@ -1,5 +1,6 @@
 package com.example.volunteerapp.domain
 
+import com.example.volunteerapp.domain.center.VolunteerCenterCoordDto
 import com.example.volunteerapp.domain.center.VolunteerCenterDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -9,7 +10,10 @@ import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
 import io.ktor.client.plugins.auth.providers.basic
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -38,6 +42,19 @@ class VolunteerCenterNetwork {
                 error("Status ${result.status}")
             }
             result.body()
+        }
+
+
+    }
+    suspend fun getCenterByCoordinates(coordinates:String):Result<VolunteerCenterDto> = withContext(Dispatchers.IO){
+        runCatching {
+            val result = client.get("http://10.0.2.2:8081/api/volunteercenter/coordinates"){
+                contentType(ContentType.Application.Json)
+                setBody(VolunteerCenterCoordDto(coordinates = coordinates))
+            }
+
+            result.body()
+
         }
 
 

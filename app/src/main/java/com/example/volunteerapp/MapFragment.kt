@@ -2,10 +2,15 @@ package com.example.volunteerapp
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.SyncRequest
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
 import com.example.volunteerapp.data.VolunteerCenterEntity
 import com.example.volunteerapp.data.center.VolunteerCenterRepoImpl
@@ -26,10 +31,12 @@ import kotlinx.coroutines.launch
 class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
     lateinit var mGoogleMap: GoogleMap
     lateinit var binding: MapFragmentBinding
+    private val mapView:MapView by activityViewModels()
     lateinit var volunteerCenterNetwork:VolunteerCenterNetwork
     lateinit var volunteerCenterRepoImpl:VolunteerCenterRepoImpl
     lateinit var getCenterUseCase:GetCenterUseCase
     lateinit var coordinatesCenter:String
+    var request1:Boolean = false
     lateinit var centerList:List<VolunteerCenterEntity>
     lateinit var sharedPreferences:SharedPreferences
     private var SHARED_PREF_NAME:String = "dildo"
@@ -52,6 +59,9 @@ class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
 
 
 
+
+
+
         binding = MapFragmentBinding.bind(view)
         var mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -63,6 +73,12 @@ class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
             Navigation.findNavController(view)
                 .navigate(R.id.action_mapFragment_to_loginFragment)
 
+        }
+        mapView.request1.observe(activity as LifecycleOwner,{
+            request1 = it
+        })
+        binding.buttonGoOnMap.setOnClickListener{
+            binding.coordinatesFramgent.isVisible = false
         }
 
 
@@ -83,13 +99,18 @@ class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
             }
             mGoogleMap.setOnMarkerClickListener { marker->
 
+                    binding.coordinatesFramgent.isVisible = true
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.coordinates_framgent,FragmentCoordinates.newInstance())?.commit()
+
                     val position = marker.position
                     val latitude = position.latitude
                     val longitude = position.longitude
                     Log.d("Coordinates","${latitude}, ${longitude}")
-                coordinatesCenter = "${latitude},${longitude}"
+                coordinatesCenter = "${latitude}, ${longitude}"
+                mapView.message.value = coordinatesCenter
                 Log.d("Coordinates1","${latitude}, ${longitude}")
                 false
+
 
 
 

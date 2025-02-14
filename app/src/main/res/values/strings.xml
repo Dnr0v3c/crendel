@@ -9,5 +9,6 @@
     <string name="name">Name</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
+    <string name="error">Error</string>
 
 </resources>

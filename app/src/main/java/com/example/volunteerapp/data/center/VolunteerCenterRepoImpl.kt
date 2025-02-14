@@ -2,6 +2,7 @@ package com.example.volunteerapp.data.center
 
 import com.example.volunteerapp.data.VolunteerCenterEntity
 import com.example.volunteerapp.domain.VolunteerCenterNetwork
+import com.example.volunteerapp.domain.center.VolunteerCenterDto
 
 class VolunteerCenterRepoImpl(val volunteerCenterNetwork: VolunteerCenterNetwork):VolunteerCenterRepo{
     override suspend fun getCenters(): Result<List<VolunteerCenterEntity>> {
@@ -15,6 +16,15 @@ class VolunteerCenterRepoImpl(val volunteerCenterNetwork: VolunteerCenterNetwork
                 )
             }
         }
+    }
+
+
+    override suspend fun getCentersCoord(coordinates:String): Result<VolunteerCenterEntity> {
+        val volunteerCenterEntity: Result<VolunteerCenterEntity> = volunteerCenterNetwork.getCenterByCoordinates(coordinates).map { volunteerDto->
+            VolunteerCenterEntity(id=volunteerDto.id, name = volunteerDto.name,coordinates=volunteerDto.coordinates)
+
+        }
+        return volunteerCenterEntity
     }
 
 
