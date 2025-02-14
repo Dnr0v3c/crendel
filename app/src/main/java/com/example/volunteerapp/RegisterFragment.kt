@@ -28,21 +28,17 @@ class RegisterFragment:Fragment(R.layout.register_fragment) {
         authNetwork = AuthNetwork()
 
         binding.signupButton.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-
-                val result = authNetwork.register(
-                    binding.username.text.toString(),
-                    binding.name.text.toString(),
-                    binding.email.text.toString(),
-                    binding.password.text.toString()
-                )
-                result.onSuccess {
-                    onLoginActivity()
-                }
-                result.onFailure {
-                    binding.error.text = "Error"
+            CoroutineScope(Dispatchers.Main).launch {
+                ifUserExist(binding.username.text.toString())
+                if(isUserExist==true){
                     binding.error.isVisible = true
+                    binding.error.setOnClickListener {
+                        onLoginActivity()
+                    }
+
                 }
+
+                register()
 
 
             }
@@ -54,6 +50,27 @@ class RegisterFragment:Fragment(R.layout.register_fragment) {
     fun onLoginActivity(){
         val intent = Intent(context,MainActivity::class.java)
         startActivity(intent)
+    }
+    suspend fun ifUserExist(login: String){
+        val result = authNetwork.isUserExist(login)
+        result.onSuccess { isExist->
+            isUserExist = isExist
+        }
+
+
+    }
+
+    suspend fun register(){
+        val result = authNetwork.register(binding.username.text.toString(),
+            binding.name.text.toString(),
+            binding.email.text.toString(),
+            binding.password.text.toString())
+        result.onSuccess {
+            onLoginActivity()
+        }
+        result.onFailure {
+            binding.error.isVisible = true
+        }
     }
 
 

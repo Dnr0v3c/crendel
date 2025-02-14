@@ -8,6 +8,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.volunteerapp.databinding.LoginFragmentBinding
 import com.example.volunteerapp.domain.AuthNetwork
 import kotlinx.coroutines.CoroutineScope
@@ -41,39 +42,40 @@ class LoginFragment :Fragment(R.layout.login_fragment){
         }
 
         binding.buttonLogin.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        ifUserExist(binding.login.text.toString())
+                        if (isUserExist == true) {
+                            var result = authNetwork.login(
+                                binding.login.text.toString(),
+                                binding.password.text.toString()
+                            )
+                            result.onSuccess {
 
-                ifUserExist(binding.login.text.toString())
-                if (isUserExist == true) {
-                    var result = authNetwork.login(
-                        binding.login.text.toString(),
-                        binding.password.text.toString()
-                    )
-                    result.onSuccess {
+                                var editor: SharedPreferences.Editor = sharedPreferences.edit()
+                                editor.putString(KEY_NAME, binding.login.text.toString())
+                                editor.apply()
 
-                        var editor: SharedPreferences.Editor = sharedPreferences.edit()
-                        editor.putString(KEY_NAME, binding.login.text.toString())
-                        editor.apply()
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_loginFragment_to_mapFragment)
 
-                        Navigation.findNavController(view)
-                            .navigate(R.id.action_loginFragment_to_mapFragment)
+                            }
+                            result.onFailure {
+                                binding.error.text = "Error"
+                            }
+                        } else {
+                            binding.error.isVisible = true
+                            binding.error.setOnClickListener {
+                                onRegisterActivity()
 
+                            }
+
+                        }
                     }
-                    result.onFailure {
-                        binding.error.text = "Error"
-                    }
-                } else {
-                    binding.error.isVisible = true
-                    binding.error.setOnClickListener {
-                        onRegisterActivity()
 
-                    }
-
-                }
             }
         }
 
-    }
+
 
 
 

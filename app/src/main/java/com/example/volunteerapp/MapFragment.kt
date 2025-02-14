@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +29,7 @@ class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
     lateinit var volunteerCenterNetwork:VolunteerCenterNetwork
     lateinit var volunteerCenterRepoImpl:VolunteerCenterRepoImpl
     lateinit var getCenterUseCase:GetCenterUseCase
+    lateinit var coordinatesCenter:String
     lateinit var centerList:List<VolunteerCenterEntity>
     lateinit var sharedPreferences:SharedPreferences
     private var SHARED_PREF_NAME:String = "dildo"
@@ -63,6 +65,7 @@ class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
 
         }
 
+
     }
 
     override fun onMapReady(googleMap:  GoogleMap) {
@@ -76,6 +79,21 @@ class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
                     var point = LatLng(coord1[0].toDouble(),coord1[1].substring(1).toDouble())
                     mGoogleMap.addMarker(MarkerOptions().position(point).title(center.name))
                 }
+
+            }
+            mGoogleMap.setOnMarkerClickListener { marker->
+
+                    val position = marker.position
+                    val latitude = position.latitude
+                    val longitude = position.longitude
+                    Log.d("Coordinates","${latitude}, ${longitude}")
+                coordinatesCenter = "${latitude},${longitude}"
+                Log.d("Coordinates1","${latitude}, ${longitude}")
+                false
+
+
+
+
 
             }
 
