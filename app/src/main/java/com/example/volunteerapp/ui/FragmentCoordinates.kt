@@ -1,4 +1,4 @@
-package com.example.volunteerapp
+package com.example.volunteerapp.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -6,10 +6,9 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.example.volunteerapp.data.VolunteerCenterEntity
+import com.example.volunteerapp.ui.modles.MapView
+import com.example.volunteerapp.R
 import com.example.volunteerapp.data.center.VolunteerCenterRepoImpl
 import com.example.volunteerapp.databinding.FragmentCoordinatesBinding
 import com.example.volunteerapp.domain.VolunteerCenterNetwork
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class FragmentCoordinates: Fragment(R.layout.fragment_coordinates) {
     lateinit var binding:FragmentCoordinatesBinding
-    private val mapView:MapView by activityViewModels()
+    private val mapView: MapView by activityViewModels()
     lateinit var coordinates:String
     lateinit var volunteerCenterNetwork:VolunteerCenterNetwork
     lateinit var volunteerCenterRepoImpl:VolunteerCenterRepoImpl

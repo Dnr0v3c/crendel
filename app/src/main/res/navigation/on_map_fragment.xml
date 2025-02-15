@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.volunteerapp.LoginFragment"
+        android:name="com.example.volunteerapp.ui.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_mapFragment"
@@ -17,18 +17,29 @@
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.volunteerapp.MapFragment"
+        android:name="com.example.volunteerapp.ui.MapFragment"
         android:label="MapFragment" >
         <action
             android:id="@+id/action_mapFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.volunteerapp.RegisterFragment"
+        android:name="com.example.volunteerapp.ui.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.volunteerapp.ui.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

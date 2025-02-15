@@ -1,4 +1,4 @@
-package com.example.volunteerapp
+package com.example.volunteerapp.ui
 
 import android.content.Context
 import android.content.Intent
@@ -8,14 +8,12 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
+import com.example.volunteerapp.R
+import com.example.volunteerapp.RegisterActivity
 import com.example.volunteerapp.databinding.LoginFragmentBinding
 import com.example.volunteerapp.domain.AuthNetwork
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginFragment :Fragment(R.layout.login_fragment){
@@ -89,7 +87,7 @@ class LoginFragment :Fragment(R.layout.login_fragment){
 
     }
     fun onRegisterActivity(){
-        val intent = Intent(context,RegisterActivity::class.java)
+        val intent = Intent(context, RegisterActivity::class.java)
         startActivity(intent)
     }
 

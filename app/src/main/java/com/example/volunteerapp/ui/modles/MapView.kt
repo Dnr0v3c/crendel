@@ -1,6 +1,5 @@
-package com.example.volunteerapp
+package com.example.volunteerapp.ui.modles
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -12,5 +11,7 @@ class MapView :ViewModel() {
     val request1:MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
+
+
 
 }
