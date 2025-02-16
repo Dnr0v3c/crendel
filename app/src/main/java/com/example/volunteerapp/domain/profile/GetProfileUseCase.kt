@@ -1,4 +1,4 @@
-package com.example.volunteerapp.domain.center
+package com.example.volunteerapp.domain.profile
 
 import com.example.volunteerapp.data.profile.ProfileRepoImpl
 

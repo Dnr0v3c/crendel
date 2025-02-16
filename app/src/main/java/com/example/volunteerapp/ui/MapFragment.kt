@@ -54,6 +54,7 @@ class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
         sharedPreferences = (context?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE) ?: null)!!
         result = sharedPreferences.getString(KEY_NAME,null)
         profileView.getUser(result.toString())
+        profileView.username.value=result.toString()
 
 
 
@@ -78,6 +79,9 @@ class MapFragment:Fragment(R.layout.map_fragment),OnMapReadyCallback {
         }
         binding.imageButton2.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_profileFragment)
+        }
+        binding.buttonSearch.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_listFragment)
         }
 
 

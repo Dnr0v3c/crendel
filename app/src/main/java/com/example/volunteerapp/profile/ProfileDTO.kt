@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProfileDTO (
+    @SerialName("id")
+    val id:Long,
     @SerialName("name")
     val name:String,
     @SerialName("username")

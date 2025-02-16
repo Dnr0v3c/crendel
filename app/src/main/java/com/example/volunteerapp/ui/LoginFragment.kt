@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.volunteerapp.R
 import com.example.volunteerapp.RegisterActivity
 import com.example.volunteerapp.databinding.LoginFragmentBinding
 import com.example.volunteerapp.domain.AuthNetwork
+import com.example.volunteerapp.ui.modles.ProfileView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +23,7 @@ class LoginFragment :Fragment(R.layout.login_fragment){
     lateinit var authNetwork: AuthNetwork
     lateinit var sharedPreferences: SharedPreferences
     private var SHARED_PREF_NAME:String = "dildo"
+    private val profileView:ProfileView by activityViewModels()
     private var KEY_NAME:String= "pizdec"
     var isUserExist:Boolean = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,6 +55,8 @@ class LoginFragment :Fragment(R.layout.login_fragment){
                                 var editor: SharedPreferences.Editor = sharedPreferences.edit()
                                 editor.putString(KEY_NAME, binding.login.text.toString())
                                 editor.apply()
+
+                                profileView.password.value=binding.password.text.toString()
 
                                 Navigation.findNavController(view)
                                     .navigate(R.id.action_loginFragment_to_mapFragment)
